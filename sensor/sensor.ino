@@ -4,6 +4,8 @@
 #define DISPLAY_CLK_PORT 8
 #define TEMP_SENSOR_PORT 0
 
+#define AREF 3.3
+
 #define DEGREES_SEGMENTS 0b01100011
 #define MINUS_SEGMENTS 0b01000000
 
@@ -13,7 +15,7 @@ float readTemp() {
   int portValue = analogRead(TEMP_SENSOR_PORT);
   Serial.print("Port: ");
   Serial.print(portValue);
-  float voltage = (portValue * 5.0) / 1024;
+  float voltage = (portValue * AREF) / 1024;
   Serial.print(" ");
   Serial.print("Volt: ");
   Serial.print(voltage);
@@ -36,6 +38,7 @@ void showTemp(float temp) {
 }
 
 void setup() {
+  analogReference(EXTERNAL);
   Serial.begin(9600);
   display.setBrightness(7, true);
 }
